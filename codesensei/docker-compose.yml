@@ -1,0 +1,49 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: codesensei-mysql
+    environment:
+      MYSQL_DATABASE: codesensei
+      MYSQL_USER: codesensei
+      MYSQL_PASSWORD: codesensei
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./mysql/init:/docker-entrypoint-initdb.d
+    command: ["--default-authentication-plugin=mysql_native_password"]
+
+  flask-ai:
+    build:
+      context: ./backend-flask
+    container_name: codesensei-flask-ai
+    environment:
+      FLASK_ENV: production
+      PORT: "5001"
+    ports:
+      - "5001:5001"
+
+  spring-api:
+    build:
+      context: ./backend-spring
+    container_name: codesensei-spring-api
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SERVER_PORT: "8080"
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/codesensei?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC
+      SPRING_DATASOURCE_USERNAME: codesensei
+      SPRING_DATASOURCE_PASSWORD: codesensei
+      APP_AI_BASE_URL: http://flask-ai:5001
+      APP_JWT_SECRET: change-me-in-prod-change-me-in-prod-change-me
+      APP_ADMIN_EMAIL: admin@codesensei.local
+      APP_ADMIN_PASSWORD: Admin123!
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql
+      - flask-ai
+
+volumes:
+  mysql_data:
+

@@ -1,0 +1,53 @@
+<div class="wrap">
+  <div class="card panel">
+    <div class="brand">
+      <div class="logo">&lt;/&gt;</div>
+      <div>
+        <div class="title">Create account</div>
+        <div class="subtitle muted">Start with 1 free conversation</div>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <div class="grid">
+        <label class="field">
+          <div class="label muted">Nom</div>
+          <input class="input" formControlName="nom" />
+        </label>
+        <label class="field">
+          <div class="label muted">Prénom</div>
+          <input class="input" formControlName="prenom" />
+        </label>
+      </div>
+
+      <label class="field">
+        <div class="label muted">Email</div>
+        <input class="input" formControlName="email" placeholder="you@domain.com" />
+      </label>
+
+      <label class="field">
+        <div class="label muted">Date de naissance</div>
+        <input class="input" type="date" formControlName="dateNaissance" />
+      </label>
+
+      <label class="field">
+        <div class="label muted">Password</div>
+        <input class="input" type="password" formControlName="password" placeholder="min 6 chars" />
+      </label>
+
+      @if (error()) {
+        <div class="error">{{ error() }}</div>
+      }
+
+      <button class="btn primary" type="submit" [disabled]="loading() || form.invalid">
+        @if (loading()) { <span>Creating…</span> } @else { <span>Sign Up</span> }
+      </button>
+    </form>
+
+    <div class="bottom muted">
+      Already have an account?
+      <a routerLink="/sign-in">Sign In</a>
+    </div>
+  </div>
+</div>
+

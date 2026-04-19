@@ -1,0 +1,37 @@
+-- Codesensei MySQL schema (MySQL 8+)
+
+CREATE TABLE IF NOT EXISTS users (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  nom VARCHAR(100) NOT NULL,
+  prenom VARCHAR(100) NOT NULL,
+  email VARCHAR(190) NOT NULL UNIQUE,
+  password VARCHAR(255) NOT NULL,
+  role ENUM('ADMIN', 'USER') NOT NULL DEFAULT 'USER',
+  date_naissance DATE NULL,
+  abonnement ENUM('NONE', 'PRO', 'BUSINESS', 'PRO_PLUS') NOT NULL DEFAULT 'NONE',
+  nombre_conversations_restantes INT NOT NULL DEFAULT 1,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS conversations (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  message LONGTEXT NOT NULL,
+  response LONGTEXT NOT NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_conversations_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX idx_conversations_user_created_at (user_id, created_at)
+);
+
+CREATE TABLE IF NOT EXISTS payments (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  user_id BIGINT NOT NULL,
+  type_abonnement ENUM('PRO', 'BUSINESS', 'PRO_PLUS') NOT NULL,
+  montant DECIMAL(10,2) NOT NULL,
+  date_paiement TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  card_last4 CHAR(4) NULL,
+  CONSTRAINT fk_payments_user FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+  INDEX idx_payments_user_date (user_id, date_paiement)
+);
+

@@ -1,0 +1,77 @@
+<div class="layout">
+  <aside class="sidebar card">
+    <div class="sideTop">
+      <div class="appName">
+        <span class="mark">&lt;/&gt;</span>
+        <span>CodeSensei</span>
+      </div>
+      <button class="btn" (click)="loadHistory()">Refresh history</button>
+    </div>
+
+    <div class="sideSection">
+      <div class="sideTitle muted">History (latest 20)</div>
+      <div class="historyList">
+        @for (it of items(); track $index) {
+          @if (it.kind === 'user') {
+            <div class="historyItem muted">{{ it.text }}</div>
+          }
+        }
+      </div>
+    </div>
+  </aside>
+
+  <main class="main card">
+    <header class="topbar">
+      <div class="meta">
+        <div class="muted">Conversations restantes</div>
+        <div class="badge">{{ me()?.nombreConversationsRestantes ?? '—' }}</div>
+        <div class="muted">Abonnement</div>
+        <div class="badge accent">{{ me()?.abonnement ?? '—' }}</div>
+      </div>
+
+      <div class="profile">
+        <button class="avatar" (click)="goAccount()">{{ profileLetter() }}</button>
+        <button class="btn" (click)="goAccount()">Account</button>
+        <button class="btn danger" (click)="logout()">Logout</button>
+      </div>
+    </header>
+
+    <section class="chat">
+      @for (it of items(); track $index) {
+        <div class="row" [class.user]="it.kind === 'user'" [class.assistant]="it.kind === 'assistant'">
+          <div class="bubble">
+            <div class="text">{{ it.text }}</div>
+            @if (it.kind === 'assistant' && it.createdAt) {
+              <div class="time muted">{{ it.createdAt | date: 'short' }}</div>
+            }
+          </div>
+        </div>
+      }
+
+      @if (loading()) {
+        <div class="row assistant">
+          <div class="bubble">
+            <div class="text muted">Thinking…</div>
+          </div>
+        </div>
+      }
+    </section>
+
+    <footer class="composer">
+      @if (error()) {
+        <div class="error">{{ error() }}</div>
+      }
+      <div class="bar">
+        <textarea
+          class="input area"
+          [ngModel]="input()"
+          (ngModelChange)="input.set($event)"
+          rows="2"
+          placeholder="Ask CodeSensei…"
+        ></textarea>
+        <button class="btn primary send" (click)="send()" [disabled]="loading() || !input().trim()">Send</button>
+      </div>
+    </footer>
+  </main>
+</div>
+

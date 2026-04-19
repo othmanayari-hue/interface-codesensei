@@ -1,0 +1,32 @@
+<div class="wrap">
+  <div class="container">
+    <div class="top">
+      <button class="btn" (click)="back()">Back</button>
+      <div class="spacer"></div>
+      <button class="btn danger" (click)="logout()">Logout</button>
+    </div>
+
+    <div class="card panel">
+      <h2>Account</h2>
+      @if (error()) {
+        <div class="error">{{ error() }}</div>
+      }
+
+      <div class="grid">
+        <div class="row"><div class="k muted">Nom</div><div class="v">{{ me()?.nom }}</div></div>
+        <div class="row"><div class="k muted">Prénom</div><div class="v">{{ me()?.prenom }}</div></div>
+        <div class="row"><div class="k muted">Email</div><div class="v">{{ me()?.email }}</div></div>
+        <div class="row"><div class="k muted">Abonnement</div><div class="v badge">{{ me()?.abonnement }}</div></div>
+        <div class="row">
+          <div class="k muted">Conversations restantes</div>
+          <div class="v badge accent">{{ me()?.nombreConversationsRestantes }}</div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn primary" (click)="goPremium()">Go to Premium</button>
+      </div>
+    </div>
+  </div>
+</div>
+

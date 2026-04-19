@@ -1,0 +1,76 @@
+<div class="wrap">
+  <div class="container">
+    <div class="top">
+      <div class="title">Admin · Users</div>
+      <div class="spacer"></div>
+      <button class="btn danger" (click)="logout()">Logout</button>
+    </div>
+
+    @if (error()) {
+      <div class="error">{{ error() }}</div>
+    }
+
+    <div class="card panel">
+      <div class="table">
+        <div class="thead muted">
+          <div>ID</div>
+          <div>Nom</div>
+          <div>Prénom</div>
+          <div>Email</div>
+          <div>Role</div>
+          <div>Abonnement</div>
+          <div>Crédits</div>
+          <div>Actions</div>
+        </div>
+        @for (u of users(); track u.id) {
+          <div class="trow">
+            <div>{{ u.id }}</div>
+            <div>{{ u.nom }}</div>
+            <div>{{ u.prenom }}</div>
+            <div class="muted">{{ u.email }}</div>
+            <div><span class="pill">{{ u.role }}</span></div>
+            <div><span class="pill accent">{{ u.abonnement }}</span></div>
+            <div><span class="pill">{{ u.nombreConversationsRestantes }}</span></div>
+            <div class="actions">
+              <button class="btn" (click)="startEdit(u)">Edit</button>
+              <button class="btn danger" (click)="del(u.id)">Delete</button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="pager muted">
+        <button class="btn" (click)="load(page() - 1)" [disabled]="page() <= 0">Prev</button>
+        <div>Page {{ page() + 1 }} / {{ totalPages() || 1 }}</div>
+        <button class="btn" (click)="load(page() + 1)" [disabled]="page() + 1 >= totalPages()">Next</button>
+      </div>
+    </div>
+
+    @if (editId()) {
+      <div class="card panel edit">
+        <div class="editTitle">Edit user #{{ editId() }}</div>
+        <form [formGroup]="form" (ngSubmit)="save()">
+          <div class="grid">
+            <label class="field">
+              <div class="label muted">Nom</div>
+              <input class="input" formControlName="nom" />
+            </label>
+            <label class="field">
+              <div class="label muted">Prénom</div>
+              <input class="input" formControlName="prenom" />
+            </label>
+          </div>
+          <label class="field">
+            <div class="label muted">Date de naissance</div>
+            <input class="input" type="date" formControlName="dateNaissance" />
+          </label>
+          <div class="editActions">
+            <button class="btn" type="button" (click)="cancelEdit()">Cancel</button>
+            <button class="btn primary" type="submit" [disabled]="form.invalid">Save</button>
+          </div>
+        </form>
+      </div>
+    }
+  </div>
+</div>
+

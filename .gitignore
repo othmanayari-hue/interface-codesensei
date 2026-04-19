@@ -1,0 +1,14 @@
+﻿*.zip
+*.jar
+node_modules/
+dist/
+target/
+.gradle/
+.idea/
+__pycache__/
+venv/
+.env
+build/
+gradle-*/
+!gradle/wrapper/
+node_modules/

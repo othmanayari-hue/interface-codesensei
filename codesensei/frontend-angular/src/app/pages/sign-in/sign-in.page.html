@@ -1,0 +1,37 @@
+<div class="wrap">
+  <div class="card panel">
+    <div class="brand">
+      <div class="logo">&lt;/&gt;</div>
+      <div>
+        <div class="title">CodeSensei</div>
+        <div class="subtitle muted">Sign in to continue</div>
+      </div>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="submit()">
+      <label class="field">
+        <div class="label muted">Email</div>
+        <input class="input" formControlName="email" placeholder="you@domain.com" />
+      </label>
+
+      <label class="field">
+        <div class="label muted">Password</div>
+        <input class="input" type="password" formControlName="password" placeholder="••••••••" />
+      </label>
+
+      @if (error()) {
+        <div class="error">{{ error() }}</div>
+      }
+
+      <button class="btn primary" type="submit" [disabled]="loading() || form.invalid">
+        @if (loading()) { <span>Signing in…</span> } @else { <span>Sign In</span> }
+      </button>
+    </form>
+
+    <div class="bottom muted">
+      No account?
+      <a routerLink="/sign-up">Sign Up</a>
+    </div>
+  </div>
+</div>
+

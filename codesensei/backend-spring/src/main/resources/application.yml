@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: codesensei-api
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://localhost:3306/codesensei?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=UTC}
+    username: ${SPRING_DATASOURCE_USERNAME:codesensei}
+    password: ${SPRING_DATASOURCE_PASSWORD:codesensei}
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+
+server:
+  port: 8081
+
+app:
+  jwt:
+    secret: ${APP_JWT_SECRET:dev-secret-dev-secret-dev-secret-dev-secret}
+    issuer: codesensei
+    expirationMinutes: 120
+  admin:
+    email: ${APP_ADMIN_EMAIL:admin@codesensei.local}
+    password: ${APP_ADMIN_PASSWORD:Admin123!}
+  ai:
+    baseUrl: ${APP_AI_BASE_URL:http://localhost:5001}
+

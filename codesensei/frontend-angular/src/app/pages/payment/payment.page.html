@@ -1,0 +1,51 @@
+<div class="wrap">
+  <div class="container">
+    <div class="top">
+      <button class="btn" (click)="back()">Back</button>
+    </div>
+
+    <div class="grid">
+      <div class="card panel">
+        <h2>Go Premium</h2>
+        <div class="muted">Choisissez un abonnement et payez par carte.</div>
+
+        <div class="plans">
+          @for (p of planIds; track p) {
+            <div class="plan" [class.active]="form.value.typeAbonnement === p" (click)="form.patchValue({ typeAbonnement: p })">
+              <div class="name">{{ p === 'PRO_PLUS' ? 'Pro+' : (p === 'BUSINESS' ? 'Business' : 'Pro') }}</div>
+              <div class="muted">{{ prices[p].price }} · {{ prices[p].credits }} conversations</div>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="card panel">
+        <h2>Paiement</h2>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <label class="field">
+            <div class="label muted">Card number (16 digits)</div>
+            <input class="input" formControlName="cardNumber" placeholder="4242424242424242" />
+          </label>
+          <div class="row2">
+            <label class="field">
+              <div class="label muted">Expiry (MM/YY)</div>
+              <input class="input" formControlName="expiry" placeholder="12/30" />
+            </label>
+            <label class="field">
+              <div class="label muted">CVC</div>
+              <input class="input" formControlName="cvc" placeholder="123" />
+            </label>
+          </div>
+
+          @if (error()) { <div class="error">{{ error() }}</div> }
+          @if (ok()) { <div class="ok">{{ ok() }}</div> }
+
+          <button class="btn primary" type="submit" [disabled]="loading() || form.invalid">
+            @if (loading()) { <span>Submitting…</span> } @else { <span>Submit</span> }
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
