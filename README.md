@@ -1,3 +1,5 @@
+<img width="2521" height="1216" alt="chat" src="https://github.com/user-attachments/assets/969f1ac0-7916-44de-92be-89c9e9d4fc6a" />
+<img width="1836" height="679" alt="payment" src="https://github.com/user-attachments/assets/823aac74-bb2e-484f-ab51-d77580d6956a" />
 # 🚀 CodeSensei: Assistant IA Intelligent (Fullstack)
 
 ![Angular](https://img.shields.io/badge/Angular-DD0031?style=for-the-badge&logo=angular&logoColor=white)
