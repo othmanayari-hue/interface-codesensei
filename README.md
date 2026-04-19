@@ -25,10 +25,8 @@ Le projet repose sur une architecture micro-services articulée comme suit :
 
 ## 📸 Aperçu de l'Interface
 
-| Interface de Chat | Gestion des Paiements |
-| :---: | :---: |
-| ![Chat CodeSensei](./chat.jpg) | ![Paiements CodeSensei](./payment.jpg) |
-| *Interaction fluide avec l'IA* | *Système d'abonnement et crédits* |
+<img width="2521" height="1216" alt="chat" src="https://github.com/user-attachments/assets/969f1ac0-7916-44de-92be-89c9e9d4fc6a" />
+<img width="1836" height="679" alt="payment" src="https://github.com/user-attachments/assets/823aac74-bb2e-484f-ab51-d77580d6956a" />
 
 ---
 
